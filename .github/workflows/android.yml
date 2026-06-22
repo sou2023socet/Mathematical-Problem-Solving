@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # <--- CHANGED FROM ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -31,7 +31,6 @@ jobs:
           ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
         run: mvn clean -Dgluonfx.target=android gluonfx:build gluonfx:package
 
-      # This step will automatically dump the exact compiler error logs if the build fails
       - name: Print Gluon Error Logs on Failure
         if: failure()
         run: |
