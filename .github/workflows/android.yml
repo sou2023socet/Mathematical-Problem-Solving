@@ -1,0 +1,28 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java and Gluon GraalVM
+        uses: gluonhq/setup-gluonfx@v1
+        with:
+          java-version: '17'
+          target: 'android'
+
+      - name: Build Android Package with Maven
+        working-directory: maths_arithimatic_opration/maths_number_properties/mathapp
+        run: mvn clean -Dgluonfx.target=android gluonfx:build gluonfx:package
+
+      - name: Upload Finished APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mathapp-android-apk
+          path: "maths_arithimatic_opration/maths_number_properties/mathapp/target/gluonfx/aarch64-linux-android/gvm/*.apk"
