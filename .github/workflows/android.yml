@@ -26,10 +26,20 @@ jobs:
 
       - name: Build Android Package with Maven
         working-directory: maths_arithimatic_opration/maths_number_properties/mathapp
+        env:
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+          ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
         run: mvn clean -Dgluonfx.target=android gluonfx:build gluonfx:package
+
+      # This step will automatically dump the exact compiler error logs if the build fails
+      - name: Print Gluon Error Logs on Failure
+        if: failure()
+        run: |
+          echo "=== GLUON COMPILE LOG ==="
+          cat maths_arithimatic_opration/maths_number_properties/mathapp/target/gluonfx/log/process-compile-*.log || true
 
       - name: Upload Finished APK
         uses: actions/upload-artifact@v4
         with:
           name: mathapp-android-apk
-          path: "maths_arithimatic_opration/maths_number_properties/mathapp/target/gluonfx/aarch64-linux-android/gvm/*.apk"
+          path: "maths_arithimatic_opration/maths_number_properties/mathapp/target/gluonfx/aarch64-android/gvm/*.apk"
