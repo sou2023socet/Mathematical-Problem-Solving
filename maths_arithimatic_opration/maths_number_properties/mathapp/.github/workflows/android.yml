@@ -1,6 +1,10 @@
 name: Build Android APK
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -16,10 +20,11 @@ jobs:
           target: 'android'
 
       - name: Build Android Package with Maven
+        working-directory: mathapp
         run: mvn clean -Dgluonfx.target=android gluonfx:build gluonfx:package
 
       - name: Upload Finished APK
         uses: actions/upload-artifact@v4
         with:
           name: mathapp-android-apk
-          path: target/gluonfx/aarch64-linux-android/gvm/*.apk
+          path: "mathapp/target/gluonfx/aarch64-linux-android/gvm/*.apk"
