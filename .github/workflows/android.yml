@@ -34,8 +34,8 @@ jobs:
       - name: Print Gluon Error Logs on Failure
         if: failure()
         run: |
-          echo "=== GLUON COMPILE LOG ==="
-          cat maths_arithimatic_opration/maths_number_properties/mathapp/target/gluonfx/log/process-compile-*.log || true
+          echo "=== GLUON ERROR LOGS ==="
+          cat maths_arithimatic_opration/maths_number_properties/mathapp/target/gluonfx/log/*.log || true
 
       - name: Upload Finished APK
         uses: actions/upload-artifact@v4
