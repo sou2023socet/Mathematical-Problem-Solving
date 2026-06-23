@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04 # <--- CHANGED FROM ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -27,8 +27,7 @@ jobs:
       - name: Build Android Package with Maven
         working-directory: maths_arithimatic_opration/maths_number_properties/mathapp
         env:
-          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
-          ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk-bundle
+          ANDROID_SDK_ROOT: "" # Clears the conflicting path so Gradle doesn't get confused
         run: mvn clean -Dgluonfx.target=android gluonfx:build gluonfx:package
 
       - name: Print Gluon Error Logs on Failure
